@@ -1,0 +1,11 @@
+My GitHub and GitLab Challenges
+
+1. Create a GitHub account and a new project repository.
+2. Upload this Python project to my GitHub repository.
+3. Create a branch and make a small change to the README.
+4. Open a Pull Request on GitHub and merge my change.
+5. Create a GitLab account and a new project.
+6. Upload this Python project to GitLab.
+7. Create a branch, make a small change, and open a Merge Request.
+8. Review and merge my change on GitLab.
+9. Practice finding my branches, commits, and merged requests on both sites.
