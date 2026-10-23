@@ -1,93 +1,262 @@
-# py_crud_assign
+# Python CRUD API
 
+A beginner-friendly task API built with **FastAPI**. Create, view, update, and
+delete tasks using JSON over HTTP. Run it with Python or Docker, then explore
+the endpoints in FastAPI's interactive documentation.
 
+> **Note:** Tasks are stored in memory. They disappear when the app stops or
+> restarts. This project is a simple learning example, not a persistent
+> production database.
 
-## Getting started
+## What you need
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **Python 3.10 or newer** for a local run
+- **Git** to clone the project and use GitHub or GitLab
+- **Docker Desktop** (Windows/macOS) or Docker Engine (Linux) for a Docker run
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+You only need Docker to use the Docker instructions.
 
-## Add your files
+## Get the project
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Clone it from the GitHub or GitLab repository:
 
+```bash
+git clone <repository-url>
+cd py_crud_assign
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/personal-learning-group8684743/py_crud_assign.git
-git branch -M main
-git push -uf origin main
+
+Replace `<repository-url>` with the URL shown by your repository host. For
+example:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/py_crud_assign.git
 ```
 
-## Integrate with your tools
+Or download the repository as a ZIP and extract it.
 
-* [Set up project integrations](https://gitlab.com/personal-learning-group8684743/py_crud_assign/-/settings/integrations)
+## Run locally with Python
 
-## Collaborate with your team
+### Windows PowerShell
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python -m uvicorn main:app --reload
+```
 
-## Test and Deploy
+If PowerShell blocks virtual environment activation, you can run the venv's
+Python directly instead:
 
-Use the built-in continuous integration in GitLab.
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn main:app --reload
+```
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+### macOS or Linux
 
-***
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python -m uvicorn main:app --reload
+```
 
-# Editing this README
+The API is now available at <http://localhost:8000>.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## Run with Docker
 
-## Suggestions for a good README
+Make sure Docker Desktop or Docker Engine is running, then, from the project
+folder:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```bash
+docker build -t python-crud-api .
+docker run --name python-crud-api -p 8000:8000 python-crud-api
+```
 
-## Name
-Choose a self-explaining name for your project.
+Open <http://localhost:8000/docs> to try the API. The `-p 8000:8000` option
+maps port 8000 inside the container to port 8000 on your computer.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+To stop the container, press `Ctrl+C`. To remove its stopped container:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+```bash
+docker rm python-crud-api
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+If port 8000 is already in use, map a different host port, for example
+`-p 8001:8000`, and open <http://localhost:8001/docs>.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Try the API
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Interactive API documentation
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Visit <http://localhost:8000/docs> and expand an endpoint to see its inputs,
+submit a request, and inspect the response. The alternative documentation
+page is <http://localhost:8000/redoc>.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Endpoints
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/health` | Check that the API is running |
+| `POST` | `/tasks` | Create a task |
+| `GET` | `/tasks` | List all tasks |
+| `GET` | `/tasks/{task_id}` | Get one task |
+| `PUT` | `/tasks/{task_id}` | Replace a task |
+| `DELETE` | `/tasks/{task_id}` | Delete a task |
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+A task has three input fields:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```json
+{
+  "task": "Read the Docker guide",
+  "description": "Build and run the project in a container",
+  "is_done": false
+}
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+The API assigns each task an `id` and includes it in responses. For example,
+create a task with `curl`:
 
-## License
-For open source projects, say how it is licensed.
+```bash
+curl -X POST http://localhost:8000/tasks \
+  -H "Content-Type: application/json" \
+  -d "{\"task\":\"Read the Docker guide\",\"description\":\"Build and run the project in a container\",\"is_done\":false}"
+```
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Example response:
+
+```json
+{
+  "task": "Read the Docker guide",
+  "description": "Build and run the project in a container",
+  "is_done": false,
+  "id": 1
+}
+```
+
+List tasks:
+
+```bash
+curl http://localhost:8000/tasks
+```
+
+Get task `1`:
+
+```bash
+curl http://localhost:8000/tasks/1
+```
+
+Update task `1` (send all three task fields):
+
+```bash
+curl -X PUT http://localhost:8000/tasks/1 \
+  -H "Content-Type: application/json" \
+  -d "{\"task\":\"Read the Docker guide\",\"description\":\"I finished the guide\",\"is_done\":true}"
+```
+
+Delete task `1`:
+
+```bash
+curl -X DELETE http://localhost:8000/tasks/1
+```
+
+The examples use `curl`, available on most systems. In Windows PowerShell,
+use `curl.exe` in place of `curl` if `curl` refers to PowerShell's web-request
+alias.
+
+Requests for a task ID that does not exist return `404 Task not found`.
+
+## Git basics
+
+Check which files have changed:
+
+```bash
+git status
+```
+
+Stage and commit your changes:
+
+```bash
+git add README.md
+git commit -m "Improve project documentation"
+```
+
+Replace `README.md` with the files you actually changed, or use `git add .` to
+stage all changes after reviewing `git status`.
+
+## Push to GitHub or GitLab
+
+1. Create a **blank repository** on [GitHub](https://github.com/) or
+   [GitLab](https://gitlab.com/). If you are pushing this existing project,
+   avoid initializing the new repository with another README.
+2. Copy the repository's HTTPS or SSH URL from the host.
+3. In a terminal at the project folder, check whether a remote is already set:
+
+   ```bash
+   git remote -v
+   ```
+
+4. If there is no `origin` remote, add the URL you copied:
+
+   ```bash
+   git remote add origin <repository-url>
+   ```
+
+   For example, a GitLab URL looks like
+   `https://gitlab.com/YOUR-USERNAME/py_crud_assign.git`; a GitHub URL looks
+   like `https://github.com/YOUR-USERNAME/py_crud_assign.git`.
+
+5. Push the current `main` branch:
+
+   ```bash
+   git branch -M main
+   git push -u origin main
+   ```
+
+If `origin` already exists but points to a different repository, inspect it
+with `git remote -v` and update it only if you intend to replace that
+destination:
+
+```bash
+git remote set-url origin <repository-url>
+```
+
+GitHub and GitLab may ask you to authenticate. Follow the host's current
+instructions for HTTPS credentials or SSH keys; do not put passwords or
+access tokens in this README or in Git.
+
+After the first push, the usual workflow is:
+
+```bash
+git add .
+git commit -m "Describe your change"
+git push
+```
+
+## Project files
+
+```text
+.
+├── main.py            # FastAPI app and in-memory task CRUD endpoints
+├── requirements.txt   # Python dependencies
+├── Dockerfile         # Instructions for building the container image
+├── .dockerignore      # Files excluded from the Docker build context
+└── README.md          # Project and setup instructions
+```
+
+## Troubleshooting
+
+- **`python` is not recognized on Windows:** Try `py` instead, or install
+  Python and enable the option to add it to `PATH`.
+- **Port 8000 is busy:** Stop the other service or use a different host port,
+  such as `docker run --name python-crud-api -p 8001:8000 python-crud-api`.
+- **Docker cannot connect:** Start Docker Desktop (or the Docker Engine
+  service) and retry.
+- **A task disappeared:** This API uses an in-memory dictionary; restarting
+  the process clears all tasks.
+- **`git push` is rejected:** Check that the remote URL is correct and that
+  you have permission to push. If the remote repository already has commits,
+  fetch and reconcile those changes before pushing.
