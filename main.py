@@ -43,6 +43,12 @@ def get_tasks():
         result.append(store_task(task_id,task))
     return result
 
+# get single by id one on one
+@app.get("/tasks/{task_id}")
+def get_task(task_id:int):
+    if task_id not in tasks:
+        raise HTTPException(status_code=404,detail="Task not found")
+    return store_task(task_id, tasks[task_id])
 
 # update 
 @app.put("/tasks/{task_id}")
